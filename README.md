@@ -1,3 +1,16 @@
+# Running the app locally.
+
+### Prerequisites:
+
+- you need docker installed on your computer.
+- You also need docker-compose
+
+## Start the app
+
+```bash
+docker-compose up
+```
+
 # Screenshots
 
 ![Demo Gif](./screenshots/Assignment.gif)
