@@ -1,32 +1,36 @@
+# FROM python:3.8.7
 FROM python:3.8-alpine
 
-LABEL author="Divine"
 
-# ENV PYTHONUNBUFFERED 1
+WORKDIR /app
 
-COPY ./requirements.txt /requirements.txt
+ENV PYTHONUNBUFFERED 1
 
-RUN apk add --update --no-cache postgresql-client
+RUN pip install --upgrade pip
 
-RUN apk add --update --no-cache --virtual .tmp-build-deps \
-  gcc libc-dev linux-headers postgresql-dev musl-dev
+COPY . .
+# COPY ./requirements.txt /requirements.txt
 
-RUN pip install -r /requirements.txt
-RUN apk del .tmp-build-deps
-RUN django-admin --version
+RUN pwd
 
-WORKDIR /server
+RUN pip install -r ./requirements.txt | cat
+# RUN pipenv install --skip-lock --system --dev
 
-COPY ./server .
+RUN python manage.py makemigrations
+RUN python manage.py migrate
 
+RUN mkdir -p /vol/web/media
 RUN mkdir -p /vol/web/static
-RUN adduser --disabled-password user
 
+RUN adduser --disabled-password user
 RUN chown -R user:user /vol/
 RUN chmod -R 755 /vol/web
 
-VOLUME ecommerce:/vol/
+EXPOSE 8000
 
 USER user
 
-CMD [ "python", "server/manage.py", "runserver" "0.0.0.0:8000" ]
+RUN ls -al && pwd
+
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
