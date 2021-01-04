@@ -28,6 +28,9 @@ WORKDIR /app
 
 COPY . .
 
+RUN python manage.py makemigrations
+RUN python manage.py migrate
+
 RUN mkdir -p /vol/web/media
 RUN mkdir -p /vol/web/static
 
