@@ -36,18 +36,26 @@ class ContactView(generic.FormView):
         name = form.cleaned_data.get('name')
         email = form.cleaned_data.get('email')
         message = form.cleaned_data.get('message')
+        print("EMAIL: " + email)
+
+        if not len(email) > 1:
+            email = settings.DEFAULT_FROM_EMAIL
 
         full_message = f"""
             Received message below from {name}, {email}
             ________________________
 
-
             {message}
             """
+        print(
+            """
+        Sending mail
+        """
+        )
         send_mail(
             subject="Received contact form submission",
             message=full_message,
-            from_email=settings.DEFAULT_FROM_EMAIL,
+            from_email=email,
             recipient_list=[settings.NOTIFY_EMAIL]
         )
         return super(ContactView, self).form_valid(form)
