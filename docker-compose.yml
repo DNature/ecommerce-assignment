@@ -1,32 +1,43 @@
 version: '3'
 
+networks:
+  ecom:
+
 services:
   app:
     build: .
+    networks:
+      - ecom
     ports:
       - 8000:8000
     volumes:
       - .:/app
       - static:/vol/web/static
       - media:/vol/web/media
-    command: python manage.py migrate && python manage.py runserver 0.0.0.0:8000
+    command: >
+      sh -c 'python manage.py migrate && python manage.py runserver 0.0.0.0:8000'
     env_file:
       - .env
-
     depends_on:
       - db
       - smtp
 
   db:
     image: postgres:12.5-alpine
+    networks:
+      - ecom
     env_file:
       - db.env
+    volumes:
+      - dbpostgres:/data/postgres
 
   nginx:
     build:
       context: ./nginx
     ports:
       - 80:80
+    networks:
+      - ecom
     depends_on:
       - app
 
@@ -39,7 +50,11 @@ services:
     env_file:
       - smtp.env
     container_name: ecom_smtp_gmail
+    networks:
+      - ecom
 
 volumes:
+  app:
+  dbpostgres:
   static:
   media:

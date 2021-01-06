@@ -10,8 +10,6 @@ SECRET_KEY = '&_)63=9%r$fz1-79x!f2m96e5$lh=no6yfphp_j5(_pdprfqz@'
 DEBUG = env('DEBUG')
 ALLOWED_HOSTS = ['*']
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,7 +37,6 @@ EMAIL_PORT = int(env('EMAIL_PORT'))
 EMAIL_HOST_USER = env('EMAIL_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_USER')
 EMAIL_USE_TLS = env('EMAIL_USE_TLS')
-# EMAIL_USE_SSL = env('EMAIL_USE_SSL')
 
 
 MIDDLEWARE = [
@@ -102,12 +99,16 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 )
-# ACCOUNT_AUTHENTICATION_METHOD = 'email'
-# ACCOUNT_EMAIL_REQUIRED = True
-# ACCOUNT_USERNAME_REQUIRED = False
-# ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-# LOGIN_REDIRECT_URL = '/'
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_SUBJECT_PREFIX = "ecom"
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+LOGIN_REDIRECT_URL = '/'
 SITE_ID = 1
+
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LANGUAGE_CODE = 'en-us'
@@ -122,11 +123,6 @@ STATIC_ROOT = '/vol/web/static'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = '/vol/web/media'
 
-# STATIC_URL = '/static/'
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-# STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 PAYPAL_CLIENT_ID = env('PAYPAL_SANDBOX_CLIENT_ID')
 PAYPAL_SECRET_KEY = env('PAYPAL_SANDBOX_SECRET_KEY')
@@ -134,6 +130,10 @@ PAYPAL_SECRET_KEY = env('PAYPAL_SANDBOX_SECRET_KEY')
 STRIPE_PUBLIC_KEY = env("STRIPE_PUBLIC_KEY")
 STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY")
 STRIPE_WEBHOOK_SECRET = env("STRIPE_WEBHOOK_SECRET")
+
+current_site = {
+    'name': env('SITE_NAME')
+}
 
 if DEBUG is False:
     SESSION_COOKIE_SECURE = True

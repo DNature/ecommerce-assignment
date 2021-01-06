@@ -76,6 +76,7 @@
 			<div id="paymentInfo">
 				<p>Order total: ${{ order.get_total }}</p>
 				<h4>Select a payment method</h4>
+				{% comment %}
 				<div>
 					<a
 						href="{% url 'cart:payment-stripe' %}"
@@ -83,6 +84,7 @@
 						>Stripe</a
 					>
 				</div>
+				{% endcomment %}
 				<div id="paypal-button-container"></div>
 			</div>
 		</div>
@@ -152,6 +154,7 @@
 							toggleLoader(false);
 							const alertSuccess = document.getElementById('alertSuccess');
 							alertSuccess.style.display = 'block';
+
 							setTimeout(function () {
 								window.location.replace('{{ CALLBACK_URL }}');
 							}, 3000);
