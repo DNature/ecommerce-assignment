@@ -1,4 +1,7 @@
 FROM nginx:1.19.0-alpine
 
-COPY ./default.conf /etc/nginx/conf.d/default.conf
+RUN mkdir -p /etc/nginx/ssl
 
+COPY ./self* /etc/nginx/ssl/
+
+COPY ./nginx.conf /etc/nginx/nginx.conf

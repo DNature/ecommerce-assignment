@@ -5,6 +5,7 @@ networks:
 
 services:
   app:
+    container_name: ecom_app
     build: .
     networks:
       - ecom
@@ -23,6 +24,7 @@ services:
       - smtp
 
   db:
+    container_name: ecom_db
     image: postgres:12.5-alpine
     networks:
       - ecom
@@ -32,10 +34,12 @@ services:
       - dbpostgres:/data/postgres
 
   nginx:
+    container_name: ecom_nginx
     build:
       context: ./nginx
     ports:
       - 80:80
+      - 443:443
     networks:
       - ecom
     depends_on:
