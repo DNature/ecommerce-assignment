@@ -114,6 +114,9 @@ ENV/
 env.bak/
 venv.bak/
 
+./nginx/dbparam.pem
+./nginx/self.key
+./nginx/self.crt
 
 !.env-files/*
 !.env-files
