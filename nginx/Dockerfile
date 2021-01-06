@@ -13,6 +13,7 @@ RUN apt-get update \
     && rm -f /etc/cron.d/certbot
 
 COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY ./dhparam.pem /etc/nginx/ssl/dhparam.pem
 COPY *.sh /scripts/
 RUN chmod +x /scripts/*.sh
 

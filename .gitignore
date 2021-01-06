@@ -121,6 +121,8 @@ venv.bak/
 !.env-files/*
 !.env-files
 
+bin/
+
 # Spyder project settings
 .spyderproject
 .spyproject
