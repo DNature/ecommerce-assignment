@@ -44,6 +44,8 @@ services:
       - ecom
     depends_on:
       - app
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
 
   smtp:
     image: namshi/smtp:latest
